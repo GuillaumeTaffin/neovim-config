@@ -16,7 +16,7 @@ return {
                     indentscope_color = "",
                 },
             },
-            styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+            styles = {
                 comments = { "italic" }, -- Change the style of comments
                 conditionals = {},
                 loops = {},
