@@ -17,7 +17,7 @@ return {
         vim.keymap.set("n", "<leader>K", "<cmd>Neotree float git_status git_base=HEAD<CR>", { desc = "[K]ommit" })
         vim.keymap.set("n", "<leader>K", function()
             local commands = require("neo-tree.sources.common.commands")
-            vim.cmd("Neotree float git_status git_base=HEAD")
+            vim.cmd("Neotree git_status git_base=HEAD")
             commands.git_add_all()
             commands.git_commit()
         end, { desc = "[K]ommit" })
