@@ -90,5 +90,29 @@ return { -- LSP Configuration & Plugins
 				end,
 			},
 		})
+
+		vim.filetype.add({
+			extension = {
+				jsligo = "jsligo",
+			},
+		})
+
+		local ligoClient = vim.lsp.start_client({
+			name = "ligo",
+			cmd = { "ligo", "lsp", "all-capabilities" },
+			capabilities = capabilities,
+		})
+
+		if not ligoClient then
+			vim.notify("LIGO CLIENT COULD NOT BE STARTED")
+		end
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "jsligo",
+			callback = function()
+				vim.lsp.buf_attach_client(0, ligoClient)
+				vim.cmd("syntax=jsligo")
+			end,
+		})
 	end,
 }

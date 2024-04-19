@@ -1,13 +1,14 @@
 return {
 	"catppuccin/nvim",
-	name = "catppuccin",
 	priority = 1000,
+	lazy = false,
 	config = function()
 		require("catppuccin").setup({
 			integrations = {
 				cmp = true,
 				gitsigns = true,
 				nvimtree = true,
+				neotree = true,
 				treesitter = true,
 				notify = false,
 				mini = {
@@ -15,7 +16,22 @@ return {
 					indentscope_color = "",
 				},
 			},
+			styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+				comments = { "italic" }, -- Change the style of comments
+				conditionals = {},
+				loops = {},
+				functions = { "italic" },
+				keywords = {},
+				strings = {},
+				variables = {},
+				numbers = {},
+				booleans = {},
+				properties = {},
+				types = { "italic" },
+				operators = {},
+				-- miscs = {}, -- Uncomment to turn off hard-coded styles
+			},
 		})
-		vim.cmd.colorscheme("catppuccin")
+		vim.cmd.colorscheme("catppuccin-frappe")
 	end,
 }
