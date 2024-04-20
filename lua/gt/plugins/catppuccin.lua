@@ -32,6 +32,5 @@ return {
                 -- miscs = {}, -- Uncomment to turn off hard-coded styles
             },
         })
-        vim.cmd.colorscheme("catppuccin-frappe")
     end,
 }

@@ -12,4 +12,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- NOTE: Here is where you install your plugins.
-require("lazy").setup("gt.plugins")
+require("lazy").setup("gt.plugins", {
+    change_detection = {
+        notify = false,
+    },
+})

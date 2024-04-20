@@ -11,17 +11,20 @@ return {
     config = function()
         --  INFO: Keymaps
         require("which-key").register({
-            ["<leader>we"] = { name = "[E]xplorer", _ = "which_key_ignore" },
+            ["<leader>e"] = { name = "[E]xplorer", _ = "which_key_ignore" },
         })
-        vim.keymap.set("n", "<leader>wee", "<cmd>Neotree toggle<CR>", { desc = "[E]xpand toggle" })
-        vim.keymap.set("n", "<leader>wer", "<cmd>Neotree filesystem reveal<CR>", { desc = "[R]eveal current file" })
-        vim.keymap.set("n", "<leader>K", function()
+        vim.keymap.set("n", "<leader>ee", "<cmd>Neotree toggle<CR>", { desc = "[E]xpand toggle" })
+        vim.keymap.set("n", "<leader>er", "<cmd>Neotree filesystem reveal<CR>", { desc = "[R]eveal current file" })
+        vim.keymap.set("n", "<leader>k", function()
             local commands = require("neo-tree.sources.common.commands")
             vim.cmd("Neotree git_status git_base=HEAD")
             print(vim.api.nvim_get_current_buf())
             commands.git_add_all()
             commands.git_commit()
         end, { desc = "[K]ommit" })
+        vim.keymap.set("n", "<leader>eq", function()
+            require("neo-tree.sources.manager").close_all()
+        end, { desc = "[Q]uit" })
 
         --  INFO: Icons
         vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
