@@ -113,9 +113,26 @@ return { -- LSP Configuration & Plugins
         --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
         --  - settings (table): Override the default settings passed when initializing the server.
         --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
+        vim.filetype.add({
+            extension = {
+                jsligo = "jsligo",
+            },
+        })
+        vim.filetype.add({
+            extension = {
+                mligo = "mligo",
+            },
+        })
+
         local servers = {
             -- clangd = {},
-            -- gopls = {},
+            gopls = {
+                settings = {
+                    completeUnimported = true,
+                    usePlaceholders = true,
+                },
+            },
             -- pyright = {},
             -- rust_analyzer = {},
             -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -141,6 +158,8 @@ return { -- LSP Configuration & Plugins
                     },
                 },
             },
+            tsserver = {},
+            eslint = {},
         }
 
         -- Ensure the servers and tools above are installed
@@ -155,7 +174,13 @@ return { -- LSP Configuration & Plugins
         -- for you, so that they are available from within Neovim.
         local ensure_installed = vim.tbl_keys(servers or {})
         vim.list_extend(ensure_installed, {
-            "stylua", -- Used to format Lua code
+            "prettier",
+            "stylua",
+            "isort",
+            "black",
+            "pylint",
+            "goimports",
+            "gofumpt",
         })
         require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -170,6 +195,60 @@ return { -- LSP Configuration & Plugins
                     require("lspconfig")[server_name].setup(server)
                 end,
             },
+        })
+
+        local lspconfig = require("lspconfig")
+        local configs = require("lspconfig.configs")
+        if not configs.ligo then
+            configs.ligo = {
+                default_config = {
+                    cmd = { "ligo", "lsp", "all-capabilities" },
+                    filetypes = { "jsligo", "mligo" },
+                    capabilities = capabilities,
+                    -- root_dir = function(filename, bufnr)
+                    --     return nil
+                    -- end,
+                    single_file_support = true,
+                    autostart = true,
+                    on_attach = function()
+                        vim.cmd("syntax=jsligo")
+                    end,
+                },
+            }
+        end
+
+        -- lspconfig.ligo.setup({
+        --     cmd = { "ligo", "lsp", "all-capabilities" },
+        --     filetypes = { "jsligo", "mligo" },
+        --     capabilities = capabilities,
+        --     -- root_dir = function(filename, bufnr)
+        --     --     return nil
+        --     -- end,
+        --     single_file_support = true,
+        --     autostart = true,
+        --     on_attach = function()
+        --         -- vim.cmd("syntax=jsligo")
+        --     end,
+        -- })
+
+        local customClient = {}
+        vim.api.nvim_create_autocmd("FileType", {
+            group = vim.api.nvim_create_augroup("ligo-lsp", { clear = true }),
+            pattern = "jsligo",
+            callback = function()
+                if not customClient.ligo_lsp then
+                    customClient.ligo_lsp = vim.lsp.start_client({
+                        name = "ligo_lsp",
+                        cmd = { "/opt/homebrew/bin/ligo", "lsp", "all-capabilities" },
+                        capabilities = capabilities,
+                    })
+                end
+                if not customClient.ligo_lsp then
+                    vim.notify("LIGO CLIENT COULD NOT BE STARTED")
+                end
+                vim.lsp.buf_attach_client(0, customClient.ligo_lsp)
+                vim.cmd("syntax=jsligo")
+            end,
         })
     end,
 }

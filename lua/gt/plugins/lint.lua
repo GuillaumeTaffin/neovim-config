@@ -5,6 +5,12 @@ return {
         config = function()
             local lint = require("lint")
             lint.linters_by_ft = {
+                javascript = { "eslint" },
+                typescript = { "eslint" },
+                javascriptreact = { "eslint" },
+                typescriptreact = { "eslint" },
+                svelte = { "eslint" },
+                python = { "pylint" },
                 markdown = { "markdownlint" },
             }
 
@@ -46,7 +52,7 @@ return {
             vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
                 group = lint_augroup,
                 callback = function()
-                    require("lint").try_lint()
+                    require("lint").try_lint(nil, { ignore_errors = true })
                 end,
             })
         end,
