@@ -1,6 +1,24 @@
+-- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
-vim.cmd("let g:netrw_liststyle = 3")
+-- [[ Setting options ]]
+-- NOTE: `:help vim.opt`
+-- NOTE: For more options, you can see `:help option-list`
+
+-- Make line numbers default
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+-- Enable mouse mode, can be useful for resizing splits for example!
+vim.opt.mouse = "a"
+
+-- Don't show the mode, since it's already in the status line
+vim.opt.showmode = false
+
+vim.opt.tabstop = 4 -- spaces for tabs (prettier default)
+vim.opt.shiftwidth = 4 -- spaces for indent width
+vim.opt.expandtab = true -- expand tab to spaces
+vim.opt.autoindent = true -- copy indent from current line when starting new one
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -34,8 +52,8 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+-- vim.opt.list = true
+-- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
@@ -46,38 +64,8 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
-vim.opt.mouse = "a"
-vim.opt.showmode = false
+-- Set highlight on search
+vim.opt.hlsearch = true
 
--- line numbers
-vim.opt.relativenumber = true -- show relative line numbers
-vim.opt.number = true -- shows absolute line number on cursor line (when relative number is on)
-
--- tabs & indentation
-vim.opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
-vim.opt.shiftwidth = 2 -- 2 spaces for indent width
-vim.opt.expandtab = true -- expand tab to spaces
-vim.opt.autoindent = true -- copy indent from current line when starting new one
-
--- line wrapping
-vim.opt.wrap = true -- disable line wrapping
-
--- appearance
-
--- turn on termguicolors for nightfly colorscheme to work
--- (have to use iterm2 or any other true color terminal)
+-- Use all colors from the terminal
 vim.opt.termguicolors = true
-vim.opt.background = "dark" -- colorschemes that can be light or dark will be made dark
-
--- backspace
-vim.opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
-
--- clipboard
-vim.opt.clipboard:append("unnamedplus") -- use system clipboard as default register
-
--- split windows
-vim.opt.splitright = true -- split vertical window to the right
-vim.opt.splitbelow = true -- split horizontal window to the bottom
-
--- turn off swapfile
-vim.opt.swapfile = false

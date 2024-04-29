@@ -1,13 +1,13 @@
-require("gt.core")
+-- INFO: BEFORE ALL
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 require("gt.lazy")
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
+-- INFO: MAIN CONF
+require("gt.core.options")
+require("gt.core.keymaps")
+require("gt.core.autocommands")
+
+-- INFO: AFTER ALL
+vim.cmd.colorscheme("catppuccin-frappe")
+vim.cmd.hi("Comment gui=none")
