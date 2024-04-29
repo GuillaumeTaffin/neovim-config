@@ -28,7 +28,11 @@ return { -- LSP Configuration & Plugins
                 keymap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
                 -- Find references for the word under your cursor.
-                keymap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+                keymap("gr", function()
+                    require("telescope.builtin").lsp_references({
+                        include_declaration = false,
+                    })
+                end, "[g]oto [R]eferences")
 
                 -- Jump to the implementation of the word under your cursor.
                 --  Useful when your language has ways of declaring types without an actual implementation.
@@ -103,6 +107,7 @@ return { -- LSP Configuration & Plugins
         --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
 
         -- Enable the following language servers
         --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -133,15 +138,32 @@ return { -- LSP Configuration & Plugins
                     usePlaceholders = true,
                 },
             },
-            -- pyright = {},
-            -- rust_analyzer = {},
+            pyright = {},
+            rust_analyzer = {},
+            tailwindcss = {},
+            cssls = {},
+            html = {},
+            htmx = {},
+            templ = {},
+            emmet_language_server = {},
+            svelte = {
+                on_attach = function(client)
+                    vim.api.nvim_create_autocmd("BufWritePost", {
+                        desc = "Trigger svelte lsp update on JS/TS file changes",
+                        group = vim.api.nvim_create_augroup("svelte-ts-js-trigger", { clear = true }),
+                        pattern = { "*.js", "*.ts" },
+                        callback = function(ctx)
+                            client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+                        end,
+                    })
+                end,
+            },
             -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
             --
             -- Some languages (like typescript) have entire language plugins that can be useful:
             --    https://github.com/pmizio/typescript-tools.nvim
             --
             -- But for many setups, the LSP (`tsserver`) will work just fine
-            -- tsserver = {},
             --
 
             lua_ls = {
@@ -181,6 +203,8 @@ return { -- LSP Configuration & Plugins
             "pylint",
             "goimports",
             "gofumpt",
+            "shellcheck",
+            "shfmt",
         })
         require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

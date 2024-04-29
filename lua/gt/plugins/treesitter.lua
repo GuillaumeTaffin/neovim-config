@@ -1,8 +1,35 @@
 return { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+        "windwp/nvim-ts-autotag",
+    },
     build = ":TSUpdate",
     opts = {
-        ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
+        ensure_installed = {
+            "bash",
+            "c",
+            "html",
+            "lua",
+            "luadoc",
+            "markdown",
+            "vim",
+            "vimdoc",
+            "astro",
+            "cmake",
+            "cpp",
+            "css",
+            "fish",
+            "gitignore",
+            "go",
+            "graphql",
+            "http",
+            "java",
+            "php",
+            "rust",
+            "scss",
+            "sql",
+            "svelte",
+        },
         auto_install = true,
         highlight = {
             enable = true,
@@ -12,6 +39,9 @@ return { -- Highlight, edit, and navigate code
             additional_vim_regex_highlighting = { "ruby" },
         },
         indent = { enable = true, disable = { "ruby" } },
+        autotag = {
+            enable = true,
+        },
     },
     config = function(_, opts)
         -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -21,6 +51,13 @@ return { -- Highlight, edit, and navigate code
         ---@diagnostic disable-next-line: missing-fields
         require("nvim-treesitter.configs").setup(opts)
 
+        -- MDX
+        vim.filetype.add({
+            extension = {
+                mdx = "mdx",
+            },
+        })
+        vim.treesitter.language.register("markdown", "mdx")
         -- There are additional nvim-treesitter modules that you can use to interact
         -- with nvim-treesitter. You should go explore a few and see what interests you:
         --
