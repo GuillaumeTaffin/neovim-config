@@ -29,6 +29,12 @@ return { -- Highlight, edit, and navigate code
             "scss",
             "sql",
             "svelte",
+            "kotlin",
+            "groovy",
+            "json",
+            "dockerfile",
+            "javascript",
+            "python",
         },
         auto_install = true,
         highlight = {
