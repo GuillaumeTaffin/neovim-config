@@ -65,7 +65,7 @@ return { -- LSP Configuration & Plugins
 
                 -- Opens a popup that displays documentation about the word under your cursor
                 --  See `:help K` for why this keymap.
-                keymap("K", vim.lsp.buf.hover, "Hover Documentation")
+                keymap("<C-k>", vim.lsp.buf.hover, "Hover Documentation")
 
                 -- WARN: This is not Goto Definition, this is Goto Declaration.
                 --  For example, in C this would take you to the header.
@@ -158,6 +158,7 @@ return { -- LSP Configuration & Plugins
                     })
                 end,
             },
+            kotlin_language_server = {},
             -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
             --
             -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -205,6 +206,7 @@ return { -- LSP Configuration & Plugins
             "gofumpt",
             "shellcheck",
             "shfmt",
+            "ktlint",
         })
         require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

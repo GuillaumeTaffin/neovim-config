@@ -29,3 +29,8 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 vim.keymap.set("n", "<leader>ww", "<cmd>wa<CR>", { desc = "[W]rite [A]ll" })
 
 vim.keymap.set({ "n", "v" }, "<Tab>", "<S-%>", { desc = "Jump to complementary boundary" })
+
+vim.keymap.set({ "n" }, "J", "<S-}>")
+vim.keymap.set({ "n" }, "K", "<S-{>")
+vim.keymap.set({ "n" }, "H", "0")
+vim.keymap.set({ "n" }, "L", "<S-%>")

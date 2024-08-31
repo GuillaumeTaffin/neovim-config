@@ -12,6 +12,7 @@ return {
                 svelte = { "eslint" },
                 python = { "pylint" },
                 markdown = { "markdownlint" },
+                kotlin = { "ktlint" },
             }
 
             -- To allow other plugins to add linters to require('lint').linters_by_ft,

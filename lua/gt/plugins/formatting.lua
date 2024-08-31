@@ -39,6 +39,7 @@ return { -- Autoformat
             lua = { "stylua" },
             python = { "isort", "black" },
             go = { "goimports", "gofumpt" },
+            kotlin = { "ktlint" },
         },
     },
 }
